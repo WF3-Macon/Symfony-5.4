@@ -18,5 +18,5 @@ liip_imagine:
                 # Création d'une vignette
                 thumbnail: { size: [250, 150], mode: outbound }
 
-        # Autres filtress...
+        # Autres filtres...
 

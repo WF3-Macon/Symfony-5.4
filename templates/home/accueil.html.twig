@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Titre de ma page{% endblock %}
+
+{% block body %}
+    <h1>Contenu de ma page</h1>
+    <a href="{{ path('app_home') }}">Home</a>
+    {{ variable }}
+    <p>{{ brouette }}</p>
+    <p>J'ai {{ age }} ans</p>
+    
+    {{ dump(users) }}
+
+    {# Equivalent à foreach($users as $user) #}
+    {% for user in users %}
+        <p>{{ user }}</p>
+    {% else %}
+        Tableau vide
+    {% endfor %}
+
+    {# Afficher des intervales #}
+    {% for i in 0..10 %}
+        {% if i is not same as(6) %}
+            <p>{{ i }}</p>
+        {% endif %}
+    {% endfor %}  
+
+    {# Affiche l'année de la date en cours #}
+    {{ 'now'|date('Y') }}
+
+{% endblock %}

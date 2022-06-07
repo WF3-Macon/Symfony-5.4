@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{# Charge une feuille de style que pour cette vue #}
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <a href="{{ path('accueil') }}">Accueil</a>
+{% endblock %}

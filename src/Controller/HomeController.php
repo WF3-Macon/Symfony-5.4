@@ -5,14 +5,16 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    #[Route('/home/{id}/{prenom}', name: 'app_home', requirements: ['id'=> '\d+'])]
+    public function index(int $id = 0, string $prenom = null): Response
     {
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'id' => $id,
+            'prenom' => $prenom
         ]);
     }
 
@@ -37,6 +39,18 @@ class HomeController extends AbstractController
             'brouette' => $brouette,
             'age' => 40,
             'users' => $users
+        ]);
+    }
+
+    #[Route('/vars', name: 'vars')]
+    public function vars(Request $request): Response
+    {
+        // $nom = $_GET['nom'];
+        $nom = $request->query->get('nom');
+        // dd($nom);
+
+        return $this->render('home/render.html.twig', [
+            'nom' => $nom
         ]);
     }
 }

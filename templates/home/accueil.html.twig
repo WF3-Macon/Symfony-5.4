@@ -8,6 +8,12 @@
     {# Génère un lien avec le nom de la route #}
     <a href="{{ path('app_home') }}">Home</a>
 
+    {# 
+        Génère un lien avec le nom de la route et 
+        transit une valeur vers celle-ci
+    #}
+    <a href="{{ path('app_home', { id: 12, prenom: 'Guillaume' }) }}">Home & Value</a>
+
     {# Affiche des variables transmis par le controller #}
     {{ variable }}
     <p>{{ brouette }}</p>
@@ -31,6 +37,9 @@
     {% endfor %}  
 
     {# Affiche l'année de la date en cours #}
-    {{ 'now'|date('Y') }}
+    {{ 'now'|date('d.m.Y') }}
+
+    {# Compter le nombre d'éléments d'un tableau #}
+    {{ users|length }}
 
 {% endblock %}

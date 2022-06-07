@@ -9,4 +9,9 @@
 
 {% block body %}
     <a href="{{ path('accueil') }}">Accueil</a>
+
+    <h1>{{ id }} - {{ prenom }}</h1>
+
+    {# /vars?nom=Smith #}
+    <a href="{{ path('vars', { nom: 'Smith' }) }}">Ma nouvelle page</a>
 {% endblock %}

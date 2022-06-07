@@ -5,4 +5,7 @@
 {% block body %}
     <h2>Hello la nouvelle page !</h2>
     <p>Agent {{ nom }}</p>
+
+    {# Affiche une image depuis le dossier "public" #}
+    <img src="{{ asset('imgs/mer.jpg') }}" alt="L'océan">
 {% endblock %}

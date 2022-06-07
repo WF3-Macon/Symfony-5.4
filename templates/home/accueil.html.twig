@@ -4,11 +4,16 @@
 
 {% block body %}
     <h1>Contenu de ma page</h1>
+
+    {# Génère un lien avec le nom de la route #}
     <a href="{{ path('app_home') }}">Home</a>
+
+    {# Affiche des variables transmis par le controller #}
     {{ variable }}
     <p>{{ brouette }}</p>
     <p>J'ai {{ age }} ans</p>
     
+    {# Affiche un détails d'une variable #}
     {{ dump(users) }}
 
     {# Equivalent à foreach($users as $user) #}

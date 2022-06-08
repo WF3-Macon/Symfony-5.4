@@ -24,4 +24,13 @@
         {% endfor %}
     </ul>
 
+    {# Affichage un ou plusieurs enregistrements avec une requête DQL perso #}
+    <ul>
+        {% for result in results %}
+            <li>{{ result.title }} ({{ result.description }})</li>
+        {% else %}
+            <p>Aucun résultat</p>
+        {% endfor %}
+    </ul>
+
 {% endblock %}

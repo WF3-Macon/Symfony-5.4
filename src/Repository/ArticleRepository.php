@@ -39,6 +39,22 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByTitleOrDescription(string $title, string $description)
+    {
+        // SELECT * FROM article
+        return $this->createQueryBuilder('a')
+            // WHERE title = :title
+            ->where('a.title = :title')
+            // OR description = :description
+            ->orWhere('a.description = :description')
+            ->setParameters([
+                'title' => $title,
+                'description' => $description
+            ])
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

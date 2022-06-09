@@ -21,4 +21,10 @@ class ArticleController extends AbstractController
             'results' => $articleRepository->findByTitleOrDescription('Titre_122', 'Description_200')
         ]);
     }
+
+    #[Route('/article/relation', name: 'app_article_relation')]
+    public function relations(): Response
+    {
+        return $this->render('article/relations.html.twig');
+    }
 }

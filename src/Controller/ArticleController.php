@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Author;
+use App\Form\ArticleFormType;
 use App\Form\AuthorFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +60,25 @@ class ArticleController extends AbstractController
         }
 
         return $this->render('home/newAuthor.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/article/new', name:'article_new')]
+    public function newArticle(Request $request, ArticleRepository $articleRepository): Response
+    {
+        $article = new Article();
+        $form = $this->createForm(ArticleFormType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setCreatedAt(new DateTimeImmutable());
+            $articleRepository->add($article, true);
+
+            $this->addFlash('success', 'Votre article à bien été enregistré');
+        }
+
+        return $this->render('home/newArticle.html.twig', [
             'form' => $form->createView()
         ]);
     }

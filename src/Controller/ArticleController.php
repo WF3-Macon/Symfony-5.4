@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
+use App\Form\AuthorFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ArticleRepository;
+use App\Repository\AuthorRepository;
 use DateTimeImmutable;
+use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
@@ -23,8 +27,38 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/relation', name: 'app_article_relation')]
-    public function relations(): Response
+    public function relations(AuthorRepository $authorRepository): Response
     {
-        return $this->render('article/relations.html.twig');
+        return $this->render('article/relations.html.twig', [
+            'authors' => $authorRepository->findAll()
+        ]);
+    }
+
+    #[Route('/author/new', name:'author_new')]
+    public function newAuthor(Request $request, AuthorRepository $authorRepository): Response
+    {
+        // Déclare un objet vide dépendant de l'entité "Author"
+        $author = new Author();
+        // dump($author);
+
+        // Créer le formulaire
+        $form = $this->createForm(AuthorFormType::class, $author);
+
+        // Remplis l'objet "$author" des données du formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // dump($author);
+            $authorRepository->add($author, true);
+
+            $this->addFlash('success', 'Votre auteur à bien été enregistré !');
+
+            $author = new Author();
+            $form = $this->createForm(AuthorFormType::class, $author);
+        }
+
+        return $this->render('home/newAuthor.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

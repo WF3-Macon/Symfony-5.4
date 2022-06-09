@@ -4,6 +4,20 @@
 
 {% block body %}
 
-    
+    <ul>
+        {% for author in authors %}
+            <li>
+                {{ author.name }}
+
+                <ul>
+                    {% for article in author.articles %}
+                        <li>{{ article.title }}</li>
+                    {% else %}
+                        <li>Aucun article</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}

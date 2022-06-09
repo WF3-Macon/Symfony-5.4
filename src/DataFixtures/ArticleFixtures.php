@@ -25,6 +25,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setTitle("Titre_$i");
             $article->setDescription("Description_$i");
             $article->setCreatedAt($randDate);
+            // getReference() permet de retouver un objet pour le passer à un setter
             $article->setAuthor($this->getReference("author_". rand(0, 19)));
 
             // Met de côté les données en attente d'insertion
@@ -35,6 +36,9 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * Cette méthode permet de définir les fixtures dont dépend celle-ci
+     */
     public function getDependencies()
     {
         return [

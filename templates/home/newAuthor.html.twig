@@ -17,6 +17,11 @@
                 {{ form_widget(form.name) }}
                 {{ form_errors(form.name) }}
             </div>
+            <div class="mb-3">
+                {{ form_label(form.profileFile) }}
+                {{ form_widget(form.profileFile) }}
+                {{ form_errors(form.profileFile) }}
+            </div>
             <button class="btn btn-primary">Enregistrer</button>
         {{ form_end(form) }}
     </div>

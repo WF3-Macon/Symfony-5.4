@@ -12,15 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ArticleRepository;
 use App\Repository\AuthorRepository;
 use DateTimeImmutable;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'app_article')]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
+        // Création de la pagination de résultats
+        $articles = $paginatorInterface->paginate(
+            $articleRepository->findAll(), // Requête SQL/DQL
+            $request->query->getInt('page', 1), // Numérotation des pages
+            $request->query->getInt('numbers', 5) // Nombre d'enregistrements par page
+        );
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
             'article' => $articleRepository->find(4),
             'post' => $articleRepository->findOneBy(['title' => 'Titre_7'], ['created_at' => 'DESC']),
             'posts' => $articleRepository->findBy(['created_at' => DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2022-06-08 08:23:03')]),
@@ -55,8 +63,8 @@ class ArticleController extends AbstractController
 
             $this->addFlash('success', 'Votre auteur à bien été enregistré !');
 
-            $author = new Author();
-            $form = $this->createForm(AuthorFormType::class, $author);
+            // $author = new Author();
+            // $form = $this->createForm(AuthorFormType::class, $author);
         }
 
         return $this->render('home/newAuthor.html.twig', [

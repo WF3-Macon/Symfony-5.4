@@ -30,7 +30,7 @@ class HomeController extends AbstractController
             'John', 'Johnny', 'Jonas', 'Jean'
         ];
 
-        dump($users); // Affiche dans la barre de debug
+        // dump($users); // Affiche dans la barre de debug
         // dd($users) // Affiche et arrête le code
 
         // Dernière position
@@ -44,9 +44,10 @@ class HomeController extends AbstractController
     }
 
     #[Route('/vars', name: 'vars')]
-    #[IsGranted('ROLE_USER')]
     public function vars(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Cette page est accessible aux administrateurs');
+
         // $nom = $_GET['nom'];
         $nom = $request->query->get('nom');
         // dd($nom);
